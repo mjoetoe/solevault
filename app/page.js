@@ -41,11 +41,15 @@ export default function Home() {
   const [refreshingAll, setRefreshingAll] = useState(false)
 
   useEffect(() => {
-    const saved = localStorage.getItem('solevault_v4')
-    if (saved) {
-      try { setSneakers(JSON.parse(saved)) } catch { setSneakers(INIT_DATA) }
-    } else {
-      setSneakers(INIT_DATA)
+    try {
+      const saved = localStorage.getItem('solevault_v4')
+      if (saved) {
+        setSneakers(JSON.parse(saved))
+      } else {
+        setSneakers(INIT_DATA.map(s => ({ ...s })))
+      }
+    } catch {
+      setSneakers(INIT_DATA.map(s => ({ ...s })))
     }
   }, [])
 
